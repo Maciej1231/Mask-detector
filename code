@@ -1,0 +1,48 @@
+import cv2
+import numpy as np
+import matplotlib.pyplot as plt
+mouth_cascade = cv2.CascadeClassifier('C:/Users/kmaci/OneDrive/Desktop/mouth.xml')
+
+face_cascade = cv2.CascadeClassifier('C:/Users/kmaci/OneDrive/Desktop/haarcascade_frontalface_default.xml')
+frameWidth = 1200
+frameHeight = 600
+video = cv2.VideoCapture(0)
+video.set(3,frameWidth)
+video.set(4, frameHeight)
+#video.set(10,150)
+font = cv2.FONT_HERSHEY_PLAIN
+while True:
+    check, img = video.read()
+    status = 0
+    
+    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    
+    
+    face=face_cascade.detectMultiScale(gray,1.1,10)
+    face_mask = mouth_cascade.detectMultiScale(gray,1.4,10)
+    
+    
+    for (x,y,w,h ) in face:
+        cv2.rectangle(img, (x+10, y+10), ((x + w), (y + h)), (255, 0, 0), 2)
+        
+        for (sx,sy,sw,sh) in face_mask:
+            
+            status = 1 
+            
+        if status ==1 :
+            cv2.putText(img,"No Face Mask ", (x,y),font,2,(0,0,255),2)
+        elif status ==0:
+            cv2.putText(img,"Face Mask Detected", (x,y),font,2,(0,255,0),2)
+            
+            
+       
+    
+    cv2.imshow('Mask Detector', img)
+    
+    if cv2.waitKey(20) == 27:
+        break
+   
+video.release()
+cv2.destroyAllWindows()
+
+
