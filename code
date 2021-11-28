@@ -1,6 +1,5 @@
 import cv2
 import numpy as np
-import matplotlib.pyplot as plt
 mouth_cascade = cv2.CascadeClassifier('C:/Users/kmaci/OneDrive/Desktop/mouth.xml')
 
 face_cascade = cv2.CascadeClassifier('C:/Users/kmaci/OneDrive/Desktop/haarcascade_frontalface_default.xml')
